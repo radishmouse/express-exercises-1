@@ -15,7 +15,6 @@ Continuing the code from [the demo](https://github.com/radishmouse/hello-express
 In `albums.js`, `require()` an `albumsData.json` file that you will need to create and fill with this data:
 
 
-
 ```json
 {
   "albums": [
@@ -103,6 +102,14 @@ In `albums.js`, `require()` an `albumsData.json` file that you will need to crea
   ]
 }
 ```
+
+Use those functions to send data back to the client when they request album or song information.
+
+If they request any IDs that do not exist, respond with the message "Data not found."
+
+## Bonus: Send JSON using `res.json()`
+
+Instead of `res.send()`, you can pass the response data to `res.json()`, which expects to receive an object or an array.
 
 
 # Convert the Chuck Norris bonus to express
