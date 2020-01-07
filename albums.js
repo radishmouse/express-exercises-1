@@ -17,7 +17,15 @@ function getSongsForAlbum(albumId) {
         // }
         return anAlbum.id == albumId;
     });
-    return theAlbum.songs;
+    console.log('****************');
+    console.log(theAlbum);
+    console.log('****************');
+    if (theAlbum) {
+        return theAlbum.songs;
+    } else {
+        throw "Album not found";
+    }
+    
 }
 
 module.exports = {

@@ -34,8 +34,15 @@ app.get('/albums', (req, res) => {
 app.get('/albums/:albumId', (req, res) => {
     // Express puts your
     // res.send(`You want: ${req.params.albumId}`);
-    const songs = albums.getSongsForAlbum(req.params.albumId);
-    res.json(songs);
+    try {
+        const songs = albums.getSongsForAlbum(req.params.albumId);
+        res.json(songs);
+    } catch (e) {
+        console.log(e);
+        console.log('================');
+        res.status(404);
+        res.send('Sorry! We could not find that one. Please pay us more money.');
+    }
 });
 
 // /albums/42/songs 
