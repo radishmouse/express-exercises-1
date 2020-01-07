@@ -15,7 +15,15 @@ app.get('/', (req, res) => {
 
 app.get('/albums', (req, res) => {
     for (let album of albums.getAlbums()) {
-        res.write(`<p>${album.title}</p>`);
+        console.log(album.title);
+        
+        res.write(`      
+        <p>
+            <a href="/albums/${album.id}">
+                ${album.title}
+            </a>
+        </p>
+        `);
     }
     res.end();
 });
@@ -27,7 +35,7 @@ app.get('/albums/:albumId', (req, res) => {
     // Express puts your
     // res.send(`You want: ${req.params.albumId}`);
     const songs = albums.getSongsForAlbum(req.params.albumId);
-    res.send(songs);
+    res.json(songs);
 });
 
 // /albums/42/songs 
@@ -43,6 +51,9 @@ app.get('/albums/:albumId/songs/:songId(\\d+)', (req, res) => {
     // "song 3 on album 42"
     const songs = albums.getSongsForAlbum(req.params.albumId);
     for (let song of songs) {
+        // The values in req.params will *always*
+        // be strings.
+        // Intentionally using "loose" comparison.
         if (song.id == req.params.songId) {
             res.write(song.title);
         }
