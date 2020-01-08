@@ -4,6 +4,18 @@ function getAlbums() {
     return data.albums;
 }
 
+function getById(id) {
+    // for-loop
+    for (let album of data.albums) {
+        if (album.id == id) {
+            return album;
+        }
+    }
+
+    // array method version of the same thing
+    // return data.albums.find(album => album.id == id);
+}
+
 function getSongsForAlbum(albumId) {
     // return data.albums.find(album => album.id == albumId).songs;
     const theAlbum = data.albums.find((anAlbum) => {
@@ -30,5 +42,6 @@ function getSongsForAlbum(albumId) {
 
 module.exports = {
     getAlbums,
-    getSongsForAlbum
+    getSongsForAlbum,
+    getById
 };

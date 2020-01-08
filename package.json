@@ -1,0 +1,31 @@
+{
+  "name": "express-exercises-1",
+  "version": "1.0.0",
+  "description": "To solidify the foundations of using Express, work through the [routing-template-madlibs](https://github.com/radishmouse/routing-templating-madlibs/tree/bonus2-solution) exercises, but using the `express` module instead of the built-in `http` module.",
+  "main": "album-browser.js",
+  "dependencies": {
+    "express-es6-template-engine": "^2.2.1",
+    "express": "^4.17.1",
+    "faker": "^4.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  },
+  "scripts": {
+    "dev": "nodemon index.js",
+    "dev:albums": "nodemon album-browser.js",
+    "dev:echo": "nodemon echo.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/radishmouse/express-exercises-1.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/radishmouse/express-exercises-1/issues"
+  },
+  "homepage": "https://github.com/radishmouse/express-exercises-1#readme"
+}

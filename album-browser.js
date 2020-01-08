@@ -6,6 +6,18 @@ const app = express();
 
 const server = http.createServer(app);
 
+app.use(express.static('public'))
+
+const es6Renderer = require('express-es6-template-engine');
+app.engine('html', es6Renderer);
+app.set('views', 'templates');
+app.set('view engine', 'html');
+
+const partials = {
+    header: 'partials/header',
+    footer: 'partials/footer'
+};
+
 const albums = require('./albums');
 
 app.get('/', (req, res) => {
@@ -14,10 +26,11 @@ app.get('/', (req, res) => {
 });
 
 app.get('/albums', (req, res) => {
+    const albumsList = [];
     for (let album of albums.getAlbums()) {
         console.log(album.title);
         
-        res.write(`      
+        albumsList.push(`      
         <p>
             <a href="/albums/${album.id}">
                 ${album.title}
@@ -25,7 +38,12 @@ app.get('/albums', (req, res) => {
         </p>
         `);
     }
-    res.end();
+    res.render('albums', {
+        locals: {
+            theAlbums: albumsList.join('')
+        },
+        partials
+    });
 });
 
 // :albumId is a *placeholder*
@@ -35,13 +53,34 @@ app.get('/albums/:albumId', (req, res) => {
     // Express puts your
     // res.send(`You want: ${req.params.albumId}`);
     try {
-        const songs = albums.getSongsForAlbum(req.params.albumId);
-        res.json(songs);
+        const { albumId } = req.params; // pluck out the value and create 
+                                        // variable with the same name
+
+        const songsArray = albums.getSongsForAlbum(albumId);
+        const theAlbum = albums.getById(albumId);
+        // res.json(songsArray);
+        // const songsString = '';
+        const songsList = [];
+        for (let song of songsArray) {
+            // songsString += `
+            //     <p>${song.title}</p>
+            // `;
+            songsList.push(`
+                <p>${song.title}</p>
+            `);
+        }
+        res.render('songs', {
+            locals: {
+                albumName: theAlbum.title,
+                listOfSongs: songsList.join('')
+            },
+            partials
+        })
+
     } catch (e) {
         console.log(e);
         console.log('================');
-        res.status(404);
-        res.send('Sorry! We could not find that one. Please pay us more money.');
+        res.status(404).send('Sorry! We could not find that one. Please pay us more money.');
     }
 });
 
